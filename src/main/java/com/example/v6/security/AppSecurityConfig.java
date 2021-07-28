@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
@@ -41,7 +39,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/**").hasRole(USER.name())
+                .antMatchers("/api/**").hasRole(STUDENT.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -56,7 +54,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe() // default 14 days
                     .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // change to 21 days
                     .key("verysecuredkey")
-                    .rememberMeParameter("remember-be")
+                    .rememberMeParameter("remember-me")
                 .and()
                 .logout()
                     .logoutUrl("/logout")
@@ -74,8 +72,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails johnUser = User.builder()
                 .username("John")
                 .password(passwordEncoder.encode("j_pass"))
-//                .roles(USER.name())
-                .authorities(USER.getGrantedAuthorities())
+//                .roles(STUDENT.name())
+                .authorities(STUDENT.getGrantedAuthorities())
                 .build();
 
 
