@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.concurrent.TimeUnit;
 
@@ -51,6 +53,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe() // default 14 days
                     .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // change to 21 days
                     .key("verysecuredkey")
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) //need to delete when .csrf() is enabled
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID", "remember-me")
+                    .logoutSuccessUrl("/login")
                 ;
     }
 
