@@ -47,12 +47,16 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 //                .httpBasic(); // change to formLogin()
                 .formLogin()
-                .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/courses", true)
+                .loginPage("/login")
+                    .permitAll()
+                    .defaultSuccessUrl("/courses", true)
+                    .passwordParameter("password")
+                    .usernameParameter("username")
                 .and()
                 .rememberMe() // default 14 days
                     .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21)) // change to 21 days
                     .key("verysecuredkey")
+                    .rememberMeParameter("remember-be")
                 .and()
                 .logout()
                     .logoutUrl("/logout")
