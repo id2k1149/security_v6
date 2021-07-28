@@ -30,4 +30,5 @@ build/
 ### VS Code ###
 .vscode/
 
-/patches/v01_authorities.patch
+### patches ###
+patches
