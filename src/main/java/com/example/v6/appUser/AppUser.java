@@ -18,4 +18,12 @@ public class AppUser {
     public String getUserName() {
         return userName;
     }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                '}';
+    }
 }
